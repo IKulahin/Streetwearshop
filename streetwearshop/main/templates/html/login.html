@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to your account</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+    <body>
+    <div class="container">
+        <div class="auth-details">
+            <h1>Login</h1>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <p>
+            Don't have an account yet?
+            <a href="{% url 'signup' %}">Sign up</a>
+        </p>
+    </div>
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+</body>
+</html>

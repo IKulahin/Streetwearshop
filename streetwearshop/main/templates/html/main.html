@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Main site Street&Code</title>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo-holder">
+                <img src="{% static 'images/logo.png' %}" alt="street&code" width="150" height="100">
+            </div>
+             <div class="right-corner">
+                 {% if user.is_authenticated %}
+                 <a class="view-cart" href="{% url 'cart' %}">View Cart</a>
+                <span>{{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="auth-link">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="auth-link">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <div class="textfield">
+        <h1>This is just headline and some textfield for text like "Biggest sale!!"</h1>
+    </div>
+
+    <div class="filter">
+        <form method="get" action="{% url 'main' %}">
+            <label for="category">Category:</label>
+            <select class="selector" name="category" id="category">
+                <option value="">All</option>
+                {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="sex">Sex:</label>
+            <select class="selector" name="sex" id="sex">
+                <option value="">All</option>
+                {% for sex in sexs %}
+                <option value="{{ sex.name }}">{{ sex.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="search">Search:</label>
+            <input class="selector" type="text" name="search" id="search" placeholder="Enter product name">
+
+            <button type="submit">Filter</button>
+        </form>
+        {% for product in products %}
+        {% endfor %}
+    </div>
+
+    <section class="products-grid">
+        {% for product in products %}
+        <div class="product">
+            <div class="image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="250" height="250">
+            </div>
+            <h2>{{product.name}}</h2>
+            <h4>{{product.price}}$</h4>
+            <a href="{% url 'detailed_product' product.id %}">View more</a>
+        </div>
+        {% endfor %}
+    </section>
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+
+</body>
+</html>

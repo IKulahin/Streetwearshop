@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order your cart</title>
+    <link rel="stylesheet" href="{% static 'css/order.css' %}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'main' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="street&code" width="150" height="100">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <div class="order-form">
+            <h2>Complete your Order</h2>
+            <form method="post" action="{% url 'main' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Place Order</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up to Street&Code</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-holder">
+                <img src="{% static 'images/logo.png' %}" alt="street&code" width="150" height="100">
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <div class="registration-details">
+            <h1>Register new account</h1>
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+        <p>Already have an account? <a href="{% url 'login' %}">login</a></p>
+    </div>
+
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+</body>
+</html>

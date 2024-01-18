@@ -1,0 +1,114 @@
+body {
+    background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 7)
+    ),url('../images/background_photo.jpg');
+    background-size: cover;
+    background-position; center;
+    background-repeat: no-repeat;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #001f30;
+    color: #ff9000;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    width: 400px;
+    border: 2px solid #8e5e15;
+    padding: 20px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: transparent;
+    backdrop-filter: blur(200px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #8e5e15;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form p {
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #8e5e15;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #001f30;
+    background-color: #8e5e15;
+}
+
+h1 {
+    color: #8e5e15;
+}
+
+p {
+    color: #8e5e15;
+}
+
+a {
+    color: #8e5e15;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container button {
+    position: absolute;
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: #001f30;
+    background: linear-gradient(to right, #8e5e15, #ff9000);
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.container button:hover {
+    background-color: #3498db;
+    color: #001f30;
+    transform: scale(1.05);
+}
+
+footer {
+    background-color: #001f30;
+    color: #ff9000;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

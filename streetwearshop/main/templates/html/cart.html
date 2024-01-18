@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <title>Your Cart</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'main' %}">
+                <img src="{% static 'images/logo.png' %}" alt="street&code" width="150" height="100">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="content-container">
+        <h1>Your Cart</h1>
+
+        {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Count</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.product.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+
+            <p>Total Price: ${{ total_price }}</p>
+
+            <form method="post" action="{% url 'place_order' %}">
+            {% csrf_token %}
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+</body>
+</html>
+
+
+

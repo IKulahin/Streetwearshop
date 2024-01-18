@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'main' %}">
+                <img src="{% static 'images/logo.png' %}" alt="street&code" width="150" height="100">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <div class="left-column">
+            <div class="name"><h1>{{ product.name }}</h1></div>
+            <div class="image"><img src="{{ product.image.url }}" alt="{{ product.name }}" width="650" height="650"></div>
+            <form class="review" id="reviewForm" method="post" action="{% url 'create_review' pk=product.pk %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add review</button>
+            </form>
+        </div>
+        <div class="right-column">
+            <div class="description"><h3>Description: {{ product.description }}</h3></div>
+            <div class="price"><h3>{{ product.price }}$</h3></div>
+            <div class="material"><h4>Material: {{ product.material }}</h4></div>
+            <div class="type"><h4>Type: {{ product.type }}</h4></div>
+            <form action="{% url 'add_to_cart' product.id %}" method="post" class="add-to-cart-form">
+                {% csrf_token %}
+                <button class="add_to_cart" type="submit">Add to Cart</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        &copy; 2023 Street&Code ╳ Street wear shop
+    </footer>
+
+</body>
+</html>
