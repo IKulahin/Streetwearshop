@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.db import transaction
+from django.db.models import Sum
 # Create your views here.
 
 
@@ -109,20 +111,21 @@ def create_review(request, pk):
     return render(request, 'html/product.html', {'form': form, 'product': product})
 
 
+@transaction.atomic
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     user = request.user
-
-    cart_item, created = CartItem.objects.get_or_create(user=user, product=product)
-
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
-
     cart, created = Cart.objects.get_or_create(user=user)
+
+    cart_item, _ = CartItem.objects.get_or_create(user=user, product=product, defaults={'quantity': 0, 'price': product.price})
+    cart_item.quantity += 1
+    cart_item.save()
+
+    if created:
+        cart.save()
     cart.items.add(cart_item)
 
-    return HttpResponseRedirect(reverse('main'))
+    return redirect('main')
 
 
 def place_order(request):
@@ -141,7 +144,7 @@ def place_order(request):
                 address=address,
                 phone_number=phone_number,
                 payment_method=payment_method,
-                total_price=calculate_total_price(products),  # Adjust this line
+                total_price=calculate_total_price(products),
             )
 
             order.products.set(products)
@@ -172,10 +175,17 @@ def calculate_total_price(selected_products):
 
 def cart_view(request):
     user = request.user
-    cart, created = Cart.objects.get_or_create(user=user)
-    cart_items = CartItem.objects.filter(cart=cart)
+    try:
+        cart = Cart.objects.get(user=user)
+    except Cart.DoesNotExist:
+        cart = None
 
-    total_price = sum(item.quantity * item.product.price for item in cart_items)
+    if cart:
+        cart_items = cart.items.all()
+        total_price = cart_items.aggregate(Sum('total_price'))['total_price__sum'] or 0
+    else:
+        cart_items = []
+        total_price = 0
 
     context = {
         'cart': cart,

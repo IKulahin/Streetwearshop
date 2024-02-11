@@ -165,8 +165,9 @@ footer {
     text-align: center;
     padding: 10px;
     bottom: 0;
-    width: 100%;
-    z-index: 10;
+    position: fixed;
+    width: 1844px;
+    z-index: 999
 }
 
 .right-column {
